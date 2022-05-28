@@ -6,42 +6,72 @@ let nickName = document.getElementById("nickName");
 let userInfo = document.getElementById("userInfo");
 let addUser = document.getElementById("addUser");
 let form = document.getElementById("form");
-let img="./assets/avatars/avatar.jpg";
-addUser.onclick=function(){
-    if (
-        name.value == "" ||
-        surName.value == "" ||
-        nickName.value == "" ||
-        userInfo.value == ""
-        ){
-            alert("Fill all the blanks and upload image again");        
-        }  
-        else{
-            addNewUser();
-            form.reset();
-
-        }
+let userİd = 0;
+let img = "./assets/avatars/avatar.jpg";
+addUser.onclick = function () {
+  if (
+    name.value == "" ||
+    surName.value == "" ||
+    nickName.value == "" ||
+    userInfo.value == ""
+  ) {
+    alert("Fill all the blanks and upload image again");
+  }
+  else {
+    addNewUser();
+    form.reset();
+    img = "./assets/avatars/avatar.jpg"
+  }
 }
 file.addEventListener("change", (e) => {
   for (const file of e.target.files) {
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = function (image) {
-      img=image.target.result;
+      img = image.target.result;
     };
   }
 });
 
-function addNewUser(){
-    let card = `
-    <div class="card m-2" style="width: 18rem;">
+function addNewUser() {
+  let card = `
+    <div id="${++userİd}" class="card m-2" style="width: 18rem;">
     <img src="${img}" class="card-img-top" alt="...">
     <div class="card-body">
-      <h5 class="card-title">${nickName.value}</h5>
-      <p class="card-text">${userInfo.value}</p>
-      <p class="card-text">${name.value + " " + surName.value}</p>
+      <h5 id="username-site" class="card-title">${nickName.value}</h5>
+      <p id="info-site" class="card-text">${userInfo.value}</p>
+      <p id="name-site" class="card-text">${name.value + " " + surName.value}</p>
+      <div class="row justify-content-evenly">
+      <button style="width:40%" id="edit" type="button" class="btn btn-warning">Edit</button>
+      <button style="width:40%" id="update" type="button" class="btn btn-success">Update</button>
+      </div>
     </div>
   </div>
     `
-userArea.innerHTML += card;
+  userArea.innerHTML += card;
+  let edit = document.getElementById("edit")
+  edit.onclick = _ => {
+    name.focus();
+    let updateButton = document.getElementById("update")
+  updateButton.onclick=function(){
+    if (name.value == "" ||
+    surName.value == "" ||
+    nickName.value == "" ||
+    userInfo.value == ""){
+      alert("Fill all the blanks to update the user")
+  }
+  else{
+    let cardusername = document.getElementById("username-site")
+      let userrealname = document.getElementById("name-site")
+      let userinfosite = document.getElementById("info-site")
+      cardusername.innerHTML=`${nickName.value}`
+      userrealname.innerHTML=`${name.value + " " + surName.value}`
+      userinfosite.innerText=`${userInfo.value}`
+      form.reset();
+  }
+  }
+  }
+  
 }
+
+
