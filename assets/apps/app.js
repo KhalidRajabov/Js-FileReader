@@ -1,3 +1,6 @@
+let file = document.getElementById("file")
+console.log(file);
+
 function uploadImage(item){
     for (const file of item) {
         let reader = new FileReader;
