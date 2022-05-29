@@ -22,7 +22,7 @@ window.onload = function () {
   let LSInfo = localStorage.getItem("info")
   let LSfullName = localStorage.getItem("name")
   let LSImage = localStorage.getItem("img")
-
+  cardImg.setAttribute("src", img)
   cardTitle.innerHTML = LSNick
   cardInfo.innerHTML = LSInfo
   cardName.innerHTML = LSfullName
@@ -30,6 +30,7 @@ window.onload = function () {
   if (LSImage!=undefined) {
     cardImg.setAttribute("src", LSImage);
 }
+
 }
 
 addUser.onclick = function () {
@@ -37,7 +38,8 @@ addUser.onclick = function () {
     name.value == "" ||
     surName.value == "" ||
     nickName.value == "" ||
-    userInfo.value == ""
+    userInfo.value == ""||
+    file.value == ""
     ) {
       alert("Fill all the blanks and upload image again");
     }
