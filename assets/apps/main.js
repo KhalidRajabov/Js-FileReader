@@ -6,21 +6,54 @@ let nickName = document.getElementById("nickName");
 let userInfo = document.getElementById("userInfo");
 let addUser = document.getElementById("addUser");
 let form = document.getElementById("form");
-let userİd = 0;
+let edit = document.getElementById("edit")
+let card = document.getElementById("main-card")
+let cardImg = document.getElementById("card-img-site")
+let cardTitle = document.getElementById("card-username-site")
+let cardInfo = document.getElementById("card-info-site")
+let cardName = document.getElementById("card-name-site")
 let img = "./assets/avatars/avatar.jpg";
+let locImage;
+
+
+window.onload = function () {
+  card.classList.remove("d-none")
+  let LSNick = localStorage.getItem("nick")
+  let LSInfo = localStorage.getItem("info")
+  let LSfullName = localStorage.getItem("name")
+  let LSImage = localStorage.getItem("img")
+
+  cardTitle.innerHTML = LSNick
+  cardInfo.innerHTML = LSInfo
+  cardName.innerHTML = LSfullName
+
+  if (LSImage!=undefined) {
+    cardImg.setAttribute("src", LSImage);
+}
+}
+
 addUser.onclick = function () {
   if (
     name.value == "" ||
     surName.value == "" ||
     nickName.value == "" ||
     userInfo.value == ""
-  ) {
-    alert("Fill all the blanks and upload image again");
-  }
-  else {
-    addNewUser();
+    ) {
+      alert("Fill all the blanks and upload image again");
+    }
+    else {
+    if(file.value!=null){
+      cardImg.setAttribute("src", locImage)
+    }
+    cardTitle.innerHTML = nickName.value
+    cardInfo.innerHTML = userInfo.value
+    cardName.innerHTML = name.value + " " + surName.value;
+    localStorage.setItem("nick", nickName.value)
+    localStorage.setItem("info", userInfo.value)
+    localStorage.setItem("img", locImage)
+    localStorage.setItem("name", name.value + " " + surName.value)
+    card.classList.remove("d-none")
     form.reset();
-    img = "./assets/avatars/avatar.jpg"
   }
 }
 file.addEventListener("change", (e) => {
@@ -28,59 +61,12 @@ file.addEventListener("change", (e) => {
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = function (image) {
-      img = image.target.result;
+      locImage = image.target.result;
     };
   }
 });
 
-function addNewUser() {
-  let card = `
-    <div id="${++userİd}" class="card m-2" style="width: 18rem;">
-    <img src="${img}" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 id="username-site" class="card-title">${nickName.value}</h5>
-      <p id="info-site" class="card-text">${userInfo.value}</p>
-      <p id="name-site" class="card-text">${name.value + " " + surName.value}</p>
-      <div class="row justify-content-evenly">
-      <button style="width:40%" id="edit" type="button" class="btn btn-primary">Edit</button>
-      <button style="width:40%" id="update" type="button" class="btn btn-success">Update</button>
-      </div>
-      <div style="margin-top: 10px" class="row text-center justify-content-around">
-      <button style="width:90%" id="rmvCard" type="button" class="btn btn-danger">Delete</button>
-      </div>
-      
-    </div>
-  </div>
-    `
-  userArea.innerHTML += card;
-  let edit = document.getElementById("edit")
-  edit.onclick = _ => {
-    name.focus();
-    let updateButton = document.getElementById("update")
-  updateButton.onclick=function(){
-    if (name.value == "" ||
-    surName.value == "" ||
-    nickName.value == "" ||
-    userInfo.value == ""){
-      alert("Fill all the blanks to update the user")
-  }
-  else{
-    let cardusername = document.getElementById("username-site")
-      let userrealname = document.getElementById("name-site")
-      let userinfosite = document.getElementById("info-site")
-      cardusername.innerHTML=`${nickName.value}`
-      userrealname.innerHTML=`${name.value + " " + surName.value}`
-      userinfosite.innerText=`${userInfo.value}`
-      form.reset();
-  }
-  }
-  }
-
-  let rmvCard = document.getElementById("rmvCard")
-  rmvCard.onclick=function(){
-    userArea.innerHTML=""
-  }
+edit.onclick = _ => {
+  name.focus();
   
 }
-
-

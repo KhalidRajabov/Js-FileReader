@@ -1,3 +1,5 @@
+//kod berbaddi amma silmeye elim gelmedi
+
 let file = document.getElementById("file");
 let userArea = document.getElementById("userArea");
 let name = document.getElementById("nameInput");
@@ -78,9 +80,7 @@ function addNewUser() {
 
   let rmvCard = document.getElementById("rmvCard")
   rmvCard.onclick=function(){
-    userArea.innerHTML=""
+    this.parentElement.parentElement.parentElement.innerHTML="";
   }
   
 }
-
-
