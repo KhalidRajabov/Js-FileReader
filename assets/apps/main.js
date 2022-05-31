@@ -41,7 +41,11 @@ addUser.onclick = function () {
     userInfo.value == ""||
     file.value == ""
     ) {
-      alert("Fill all the blanks and upload image again");
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Fill all the blanks and upload image again!',
+      })
     }
     else {
     if(file.value!=null){
